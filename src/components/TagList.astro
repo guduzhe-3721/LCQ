@@ -4,13 +4,14 @@ interface Props {
 }
 
 const { tags } = Astro.props;
+const base = import.meta.env.BASE_URL;
 ---
 
 <ul class="tag-list" aria-label="Tags">
   {
     tags.map((tag) => (
       <li>
-        <a href={`/tags/${encodeURIComponent(tag)}`}>#{tag}</a>
+        <a href={`${base}tags/${encodeURIComponent(tag)}`}>#{tag}</a>
       </li>
     ))
   }

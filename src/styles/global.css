@@ -59,6 +59,18 @@ a:focus-visible {
 main {
   padding-block: 3rem 5rem;
 }
+.site-footer {
+  border-top: 1px solid #e2e8f0;
+  padding-block: 1.25rem;
+  background: #fff;
+  color: #475569;
+  font-size: 0.9rem;
+}
+.site-footer .site-shell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
 .hero,
 .page-intro {
   max-width: 48rem;
