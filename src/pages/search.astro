@@ -1,0 +1,93 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="搜索 | Personal Library">
+  <section class="search-page" aria-labelledby="search-heading">
+    <header class="page-intro">
+      <p class="eyebrow">Search</p>
+      <h1 id="search-heading">内容搜索</h1>
+      <p>仅搜索已发布的文章和资源，所有搜索均在本地静态索引中完成。</p>
+    </header>
+
+    <label class="search-label" for="content-search">搜索文章和资源</label>
+    <input
+      id="content-search"
+      class="search-input"
+      type="search"
+      autocomplete="off"
+      placeholder="输入标题、主题或关键词"
+    />
+    <p
+      id="search-status"
+      class="search-status"
+      role="status"
+      aria-live="polite"
+    >
+      输入关键词开始搜索。
+    </p>
+    <div id="search-results" class="search-results" aria-live="polite"></div>
+  </section>
+</BaseLayout>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>("#content-search");
+  const status = document.querySelector<HTMLElement>("#search-status");
+  const results = document.querySelector<HTMLElement>("#search-results");
+
+  if (!input || !status || !results)
+    throw new Error("Search page is missing required elements");
+
+  const createResult = (result: {
+    data: () => Promise<{
+      url: string;
+      excerpt: string;
+      meta: { title?: string };
+    }>;
+  }) =>
+    result.data().then((data) => {
+      const card = document.createElement("article");
+      card.className = "search-result";
+
+      const type = document.createElement("p");
+      type.className = "eyebrow";
+      type.textContent = data.url.startsWith("/resources/") ? "资源" : "文章";
+
+      const heading = document.createElement("h2");
+      const link = document.createElement("a");
+      link.href = data.url;
+      link.textContent = data.meta.title ?? "未命名内容";
+      heading.append(link);
+
+      const excerpt = document.createElement("p");
+      excerpt.textContent = data.excerpt.replace(/<[^>]*>/g, "");
+
+      card.append(type, heading, excerpt);
+      return card;
+    });
+
+  input.addEventListener("input", async () => {
+    const query = input.value.trim();
+    results.replaceChildren();
+
+    if (!query) {
+      status.textContent = "输入关键词开始搜索。";
+      return;
+    }
+
+    status.textContent = "正在搜索…";
+    const pagefindModule = "/pagefind/pagefind.js";
+    const pagefind = await import(/* @vite-ignore */ pagefindModule);
+    const response = await pagefind.search(query);
+    status.textContent = `找到 ${response.results.length} 条结果。`;
+
+    if (!response.results.length) {
+      const empty = document.createElement("p");
+      empty.textContent = "没有找到匹配的已发布内容，请尝试其他关键词。";
+      results.append(empty);
+      return;
+    }
+
+    results.append(...(await Promise.all(response.results.map(createResult))));
+  });
+</script>

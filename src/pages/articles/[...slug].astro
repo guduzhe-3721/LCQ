@@ -19,7 +19,7 @@ const { Content, headings } = await render(article);
 ---
 
 <BaseLayout title={`${article.data.title} | Personal Library`}>
-  <article class="detail-layout">
+  <article class="detail-layout" data-pagefind-body>
     <header class="page-intro">
       <p class="eyebrow">
         {
@@ -29,9 +29,9 @@ const { Content, headings } = await render(article);
             year: "numeric",
           })
         }
-      </p><h1>{article.data.title}</h1><p>{article.data.description}</p><TagList
-        tags={article.data.tags}
-      />
+      </p><h1 data-pagefind-meta="title">{article.data.title}</h1><p>
+        {article.data.description}
+      </p><TagList tags={article.data.tags} />
     </header>
     <div class="article-body"><Content /></div>
     <aside class="toc" aria-label="Table of contents">

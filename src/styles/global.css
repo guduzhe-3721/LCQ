@@ -194,6 +194,41 @@ section + section {
 .metadata code {
   font-size: 0.82rem;
 }
+.search-page {
+  max-width: 48rem;
+}
+.search-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+}
+.search-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #94a3b8;
+  border-radius: 0.6rem;
+  font: inherit;
+}
+.search-status {
+  min-height: 1.65em;
+  color: #475569;
+}
+.search-results {
+  display: grid;
+  gap: 1rem;
+}
+.search-result {
+  padding: 1.35rem;
+  border: 1px solid #dbeafe;
+  border-radius: 1rem;
+  background: #fff;
+}
+.search-result h2 {
+  margin: 0.2rem 0 0.65rem;
+}
+.search-result p:last-child {
+  margin-bottom: 0;
+}
 .sr-only {
   position: absolute;
   width: 1px;
