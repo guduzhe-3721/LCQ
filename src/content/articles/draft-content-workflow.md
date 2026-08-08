@@ -1,9 +1,9 @@
 ---
-title: "Draft: A calm publishing workflow"
-description: "An unpublished note about writing in small, useful increments."
+title: "草稿：从容的发布流程"
+description: "一篇关于以小而实用的增量写作的未发布笔记。"
 publishedAt: 2026-08-08
-tags: ["workflow", "writing"]
+tags: ["工作流", "写作"]
 draft: true
 ---
 
-This draft is intentionally excluded from the public reading flow until it is ready.
+这篇草稿会在准备就绪前始终排除在公开阅读流程之外。

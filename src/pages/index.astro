@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ContentCard from "../components/ContentCard.astro";
 
-const title = "Personal Library";
+const title = "个人资料库";
 const [articles, resources]: [
   CollectionEntry<"articles">[],
   CollectionEntry<"resources">[],
@@ -22,14 +22,14 @@ const base = import.meta.env.BASE_URL;
 
 <BaseLayout title={title}>
   <section class="hero">
-    <p class="eyebrow">Markdown-powered personal publishing</p>
-    <h1>Personal Library</h1>
-    <p>Articles and useful resources, published as a simple static site.</p>
+    <p class="eyebrow">由 Markdown 驱动的个人发布</p>
+    <h1>个人资料库</h1>
+    <p>用简洁的静态网站发布文章与实用资源。</p>
   </section>
   <section aria-labelledby="articles-heading">
     <div class="section-heading">
-      <h2 id="articles-heading">Latest articles</h2>
-      <a href={`${base}articles`}>View all articles</a>
+      <h2 id="articles-heading">最新文章</h2>
+      <a href={`${base}articles`}>查看全部文章</a>
     </div>
     <div class="card-grid">
       {
@@ -44,7 +44,7 @@ const base = import.meta.env.BASE_URL;
               description={article.data.description}
               href={`${base}articles/${article.id}`}
               tags={article.data.tags}
-              meta={article.data.publishedAt.toLocaleDateString("en-US", {
+              meta={article.data.publishedAt.toLocaleDateString("zh-CN", {
                 month: "long",
                 day: "numeric",
                 year: "numeric",
@@ -56,8 +56,8 @@ const base = import.meta.env.BASE_URL;
   </section>
   <section aria-labelledby="resources-heading">
     <div class="section-heading">
-      <h2 id="resources-heading">Published resources</h2>
-      <a href={`${base}resources`}>View all resources</a>
+      <h2 id="resources-heading">已发布资源</h2>
+      <a href={`${base}resources`}>查看全部资源</a>
     </div>
     <div class="card-grid">
       {

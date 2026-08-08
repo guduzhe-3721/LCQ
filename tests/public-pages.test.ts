@@ -12,6 +12,18 @@ function builtPage(...segments: string[]) {
 }
 
 describe("public static pages", () => {
+  it("renders the public navigation and footer in Simplified Chinese", () => {
+    execSync("npm run build", { cwd: projectRoot, stdio: "pipe" });
+
+    const home = builtPage();
+
+    expect(home).toContain("文章");
+    expect(home).toContain("资源");
+    expect(home).toContain("搜索");
+    expect(home).toContain("关于本站");
+    expect(home).toContain("网站政策与下架申请");
+  });
+
   it("renders published collection entries without drafts across discovery pages", () => {
     execSync("npm run build", { cwd: projectRoot, stdio: "pipe" });
 
@@ -21,16 +33,16 @@ describe("public static pages", () => {
     const tag = builtPage("tags", "astro");
 
     for (const document of [home, tag]) {
-      expect(document).toContain("A Markdown-first personal library");
-      expect(document).toContain("Astro library starter");
-      expect(document).not.toContain("Draft: A calm publishing workflow");
-      expect(document).not.toContain("Draft: Reading checklist");
+      expect(document).toContain("以 Markdown 为先的个人资料库");
+      expect(document).toContain("Astro 资料库起步模板");
+      expect(document).not.toContain("草稿：从容的发布流程");
+      expect(document).not.toContain("草稿：阅读清单");
     }
 
-    expect(articles).toContain("A Markdown-first personal library");
-    expect(articles).not.toContain("Draft: A calm publishing workflow");
-    expect(resources).toContain("Astro library starter");
-    expect(resources).not.toContain("Draft: Reading checklist");
+    expect(articles).toContain("以 Markdown 为先的个人资料库");
+    expect(articles).not.toContain("草稿：从容的发布流程");
+    expect(resources).toContain("Astro 资料库起步模板");
+    expect(resources).not.toContain("草稿：阅读清单");
   });
 
   it("renders article Markdown and a table of contents", () => {
@@ -38,9 +50,9 @@ describe("public static pages", () => {
 
     const article = builtPage("articles", "markdown-first-library");
 
-    expect(article).toContain("Markdown keeps writing portable");
-    expect(article).toContain('aria-label="Table of contents"');
-    expect(article).toContain("August 8, 2026");
+    expect(article).toContain("Markdown 让写作保持便携");
+    expect(article).toContain('aria-label="目录"');
+    expect(article).toContain("2026年8月8日");
   });
 
   it("renders resource metadata with its direct external GitHub Release download", () => {
@@ -58,7 +70,7 @@ describe("public static pages", () => {
     expect(resource).toContain(
       "github.com/example/astro-library-starter/releases/download/v1.0.0/astro-library-starter.zip",
     );
-    expect(resource).toContain("Download from GitHub Release");
+    expect(resource).toContain("从 GitHub Release 下载");
   });
 
   it("does not generate static pages for draft content", () => {

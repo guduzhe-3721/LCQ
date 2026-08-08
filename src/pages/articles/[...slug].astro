@@ -18,12 +18,12 @@ const { article }: { article: CollectionEntry<"articles"> } = Astro.props;
 const { Content, headings } = await render(article);
 ---
 
-<BaseLayout title={`${article.data.title} | Personal Library`}>
+<BaseLayout title={`${article.data.title} | 个人资料库`}>
   <article class="detail-layout" data-pagefind-body>
     <header class="page-intro">
       <p class="eyebrow">
         {
-          article.data.publishedAt.toLocaleDateString("en-US", {
+          article.data.publishedAt.toLocaleDateString("zh-CN", {
             month: "long",
             day: "numeric",
             year: "numeric",
@@ -34,8 +34,8 @@ const { Content, headings } = await render(article);
       </p><TagList tags={article.data.tags} />
     </header>
     <div class="article-body"><Content /></div>
-    <aside class="toc" aria-label="Table of contents">
-      <h2>On this page</h2><ul>
+    <aside class="toc" aria-label="目录">
+      <h2>本页目录</h2><ul>
         {
           (headings as { depth: number; slug: string; text: string }[]).map(
             (heading) => (

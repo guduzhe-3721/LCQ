@@ -1,18 +1,18 @@
 ---
 const base = import.meta.env.BASE_URL;
 const links = [
-  { href: base, label: "Home" },
-  { href: `${base}articles`, label: "Articles" },
-  { href: `${base}resources`, label: "Resources" },
-  { href: `${base}search`, label: "Search" },
-  { href: `${base}about`, label: "About" },
+  { href: base, label: "首页" },
+  { href: `${base}articles`, label: "文章" },
+  { href: `${base}resources`, label: "资源" },
+  { href: `${base}search`, label: "搜索" },
+  { href: `${base}about`, label: "关于本站" },
 ];
 ---
 
 <header class="site-header">
   <div class="site-shell header-content">
-    <a class="brand" href={base}>Personal Library</a>
-    <nav aria-label="Primary navigation">
+    <a class="brand" href={base}>个人资料库</a>
+    <nav aria-label="主导航">
       <ul class="nav-links">
         {
           links.map((link) => (

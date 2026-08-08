@@ -66,9 +66,9 @@ describe("Markdown content collections", () => {
       "utf8",
     );
 
-    expect(document).toContain("A Markdown-first personal library");
-    expect(document).toContain("Astro library starter");
-    expect(document).not.toContain("Draft: A calm publishing workflow");
-    expect(document).not.toContain("Draft: Reading checklist");
+    expect(document).toContain("以 Markdown 为先的个人资料库");
+    expect(document).toContain("Astro 资料库起步模板");
+    expect(document).not.toContain("草稿：从容的发布流程");
+    expect(document).not.toContain("草稿：阅读清单");
   });
 });

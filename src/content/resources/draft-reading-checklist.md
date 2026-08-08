@@ -1,8 +1,8 @@
 ---
-title: "Draft: Reading checklist"
-description: "A work-in-progress checklist for evaluating technical resources."
-category: "Checklist"
-tags: ["reading", "evaluation"]
+title: "草稿：阅读清单"
+description: "一份用于评估技术资源的编写中清单。"
+category: "清单"
+tags: ["阅读", "评估"]
 version: "0.1.0"
 fileName: "reading-checklist.md"
 size: "3 KB"
@@ -14,4 +14,4 @@ publishedAt: 2026-08-08
 draft: true
 ---
 
-This draft resource remains private while its checklist is refined.
+这项草稿资源会在清单完善期间保持私有。

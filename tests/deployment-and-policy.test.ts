@@ -62,9 +62,9 @@ describe("policy page", () => {
       "utf8",
     );
 
-    expect(policy).toContain("Policy and takedown");
-    expect(policy).toContain("No user data is collected");
-    expect(policy).toContain("takedown");
+    expect(policy).toContain("网站政策与下架申请");
+    expect(policy).toContain("本站不收集用户数据");
+    expect(policy).toContain("下架申请");
     expect(home).toContain('href="/policy"');
   });
 });

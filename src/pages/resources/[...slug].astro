@@ -18,7 +18,7 @@ const { resource }: { resource: CollectionEntry<"resources"> } = Astro.props;
 const { Content } = await render(resource);
 ---
 
-<BaseLayout title={`${resource.data.title} | Personal Library`}>
+<BaseLayout title={`${resource.data.title} | 个人资料库`}>
   <article class="detail-layout" data-pagefind-body>
     <header class="page-intro">
       <p class="eyebrow">
@@ -32,18 +32,17 @@ const { Content } = await render(resource);
       href={resource.data.releaseUrl}
       target="_blank"
       rel="noopener noreferrer"
-      >Download from GitHub Release <span class="sr-only"
-        >(opens in a new tab)</span
+      >从 GitHub Release 下载 <span class="sr-only">（在新标签页中打开）</span
       ></a
     >
     <dl class="metadata">
-      <div><dt>Version</dt><dd>{resource.data.version}</dd></div><div>
-        <dt>File size</dt><dd>{resource.data.size}</dd>
+      <div><dt>版本</dt><dd>{resource.data.version}</dd></div><div>
+        <dt>文件大小</dt><dd>{resource.data.size}</dd>
       </div><div>
-        <dt>Source URL</dt><dd>
+        <dt>源代码 URL</dt><dd>
           <a href={resource.data.sourceUrl}>{resource.data.sourceUrl}</a>
         </dd>
-      </div><div><dt>License</dt><dd>{resource.data.license}</dd></div><div>
+      </div><div><dt>许可证</dt><dd>{resource.data.license}</dd></div><div>
         <dt>SHA-256</dt><dd><code>{resource.data.sha256}</code></dd>
       </div>
     </dl>

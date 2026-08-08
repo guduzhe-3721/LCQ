@@ -41,8 +41,8 @@ const matchingResources = resources.filter((resource) =>
 const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title={`#${tag} | Personal Library`}>
-  <header class="page-intro"><p class="eyebrow">Tag</p><h1>#{tag}</h1></header>
+<BaseLayout title={`#${tag} | 个人资料库`}>
+  <header class="page-intro"><p class="eyebrow">标签</p><h1>#{tag}</h1></header>
   <div class="card-grid">
     {
       matchingArticles.map((article) => (
@@ -51,7 +51,7 @@ const base = import.meta.env.BASE_URL;
           description={article.data.description}
           href={`${base}articles/${article.id}`}
           tags={article.data.tags}
-          meta="Article"
+          meta="文章"
         />
       ))
     }
@@ -62,7 +62,7 @@ const base = import.meta.env.BASE_URL;
           description={resource.data.description}
           href={`${base}resources/${resource.id}`}
           tags={resource.data.tags}
-          meta="Resource"
+          meta="资源"
         />
       ))
     }

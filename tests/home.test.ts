@@ -17,7 +17,7 @@ describe("the built home page", () => {
       "utf8",
     );
 
-    expect(document).toContain("<title>Personal Library</title>");
-    expect(document.match(/<h1[^>]*>Personal Library<\/h1>/g)).toHaveLength(1);
+    expect(document).toContain("<title>个人资料库</title>");
+    expect(document.match(/<h1[^>]*>个人资料库<\/h1>/g)).toHaveLength(1);
   });
 });

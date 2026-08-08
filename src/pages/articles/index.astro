@@ -14,10 +14,10 @@ articles.sort(
 const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="Articles | Personal Library">
+<BaseLayout title="文章 | 个人资料库">
   <header class="page-intro">
-    <p class="eyebrow">Writing</p><h1>Articles</h1><p>
-      Notes on building a portable, useful personal library.
+    <p class="eyebrow">写作</p><h1>文章</h1><p>
+      记录如何构建一个便携、实用的个人资料库。
     </p>
   </header>
   <div class="card-grid">
@@ -28,7 +28,7 @@ const base = import.meta.env.BASE_URL;
           description={article.data.description}
           href={`${base}articles/${article.id}`}
           tags={article.data.tags}
-          meta={article.data.publishedAt.toLocaleDateString("en-US", {
+          meta={article.data.publishedAt.toLocaleDateString("zh-CN", {
             month: "long",
             day: "numeric",
             year: "numeric",
