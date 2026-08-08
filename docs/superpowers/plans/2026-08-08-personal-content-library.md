@@ -230,7 +230,7 @@ git commit -m "feat: add public articles and markdown import"
 
 **Interfaces:**
 - Consumes: `requireAdmin()` and the `resources` table.
-- Produces: `validateResourceInput(input)`, `uploadResource(file, metadata)`, and `publishResource(resourceId)`.
+- Produces: `validateResourceInput(input)`, `createMultipartUpload(input)`, `completeMultipartUpload(input)`, and `publishResource(resourceId)`.
 
 - [ ] **Step 1: Write failing validation and upload-state tests**
 
@@ -245,7 +245,7 @@ Run: `npm test -- tests/resources.test.ts tests/cos.test.ts`
 
 Expected: FAIL because resource services do not exist.
 
-- [ ] **Step 3: Implement the S3-compatible COS adapter**
+- [ ] **Step 3: Implement the S3-compatible COS adapter and direct multipart upload**
 
 ```ts
 export function createCosClient() {
@@ -253,7 +253,7 @@ export function createCosClient() {
 }
 ```
 
-Use a generated key `resources/<resource-id>/<sanitized-file-name>`. Stream the admin-selected file to COS server-side, calculate SHA-256 while streaming, and save a `draft` resource only after the upload succeeds. On a failed upload, delete the partially written object and return a user-safe error.
+Use a generated key `resources/<resource-id>/<sanitized-file-name>`. The server creates a COS multipart upload and returns short-lived presigned URLs for each part; the administrator browser uploads parts directly to COS and incrementally computes SHA-256 without loading the whole file into memory. The browser sends part ETags and the calculated hash to the server, which completes the upload and saves a `draft` resource only after COS confirms completion. On cancellation, expiry, or completion failure, the server aborts the multipart upload and returns a user-safe error. File bytes never pass through Vercel functions.
 
 - [ ] **Step 4: Implement publish-state rules and admin API**
 
@@ -264,7 +264,7 @@ export const resourceInputSchema = z.object({
 });
 ```
 
-`publishResource` must require file key, nonzero byte size, SHA-256, and schema-valid metadata; otherwise keep the resource draft. `archiveResource` immediately changes status to `archived` and appends an audit log entry.
+`publishResource` must require a completed COS upload, file key, nonzero byte size, SHA-256, and schema-valid metadata; otherwise keep the resource draft. `archiveResource` immediately changes status to `archived` and appends an audit log entry.
 
 - [ ] **Step 5: Run tests and commit**
 
