@@ -1,0 +1,39 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import ContentCard from "../../components/ContentCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const articles: CollectionEntry<"articles">[] = await getCollection(
+  "articles",
+  ({ data }: CollectionEntry<"articles">) => !data.draft,
+);
+
+articles.sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+---
+
+<BaseLayout title="Articles | Personal Library">
+  <header class="page-intro">
+    <p class="eyebrow">Writing</p><h1>Articles</h1><p>
+      Notes on building a portable, useful personal library.
+    </p>
+  </header>
+  <div class="card-grid">
+    {
+      articles.map((article) => (
+        <ContentCard
+          title={article.data.title}
+          description={article.data.description}
+          href={`/articles/${article.id}`}
+          tags={article.data.tags}
+          meta={article.data.publishedAt.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })}
+        />
+      ))
+    }
+  </div>
+</BaseLayout>

@@ -1,0 +1,52 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import TagList from "../../components/TagList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const resources: CollectionEntry<"resources">[] = await getCollection(
+    "resources",
+    ({ data }: CollectionEntry<"resources">) => !data.draft,
+  );
+  return resources.map((resource: CollectionEntry<"resources">) => ({
+    params: { slug: resource.id },
+    props: { resource },
+  }));
+}
+
+const { resource }: { resource: CollectionEntry<"resources"> } = Astro.props;
+const { Content } = await render(resource);
+---
+
+<BaseLayout title={`${resource.data.title} | Personal Library`}>
+  <article class="detail-layout">
+    <header class="page-intro">
+      <p class="eyebrow">
+        {resource.data.category} · v{resource.data.version}
+      </p><h1>{resource.data.title}</h1><p>
+        {resource.data.description}
+      </p><TagList tags={resource.data.tags} />
+    </header>
+    <a
+      class="button"
+      href={resource.data.releaseUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      >Download from GitHub Release <span class="sr-only"
+        >(opens in a new tab)</span
+      ></a
+    >
+    <dl class="metadata">
+      <div><dt>Version</dt><dd>{resource.data.version}</dd></div><div>
+        <dt>File size</dt><dd>{resource.data.size}</dd>
+      </div><div>
+        <dt>Source URL</dt><dd>
+          <a href={resource.data.sourceUrl}>{resource.data.sourceUrl}</a>
+        </dd>
+      </div><div><dt>License</dt><dd>{resource.data.license}</dd></div><div>
+        <dt>SHA-256</dt><dd><code>{resource.data.sha256}</code></dd>
+      </div>
+    </dl>
+    <div class="article-body"><Content /></div>
+  </article>
+</BaseLayout>

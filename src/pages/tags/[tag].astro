@@ -1,0 +1,69 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import ContentCard from "../../components/ContentCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const [articles, resources] = await Promise.all([
+    getCollection(
+      "articles",
+      ({ data }: CollectionEntry<"articles">) => !data.draft,
+    ),
+    getCollection(
+      "resources",
+      ({ data }: CollectionEntry<"resources">) => !data.draft,
+    ),
+  ]);
+  const tags = new Set(
+    [...articles, ...resources].flatMap((entry) => entry.data.tags),
+  );
+  return [...tags].map((tag) => ({
+    params: { tag },
+    props: { tag, articles, resources },
+  }));
+}
+
+const {
+  tag,
+  articles,
+  resources,
+}: {
+  tag: string;
+  articles: CollectionEntry<"articles">[];
+  resources: CollectionEntry<"resources">[];
+} = Astro.props;
+const matchingArticles = articles.filter((article) =>
+  article.data.tags.includes(tag),
+);
+const matchingResources = resources.filter((resource) =>
+  resource.data.tags.includes(tag),
+);
+---
+
+<BaseLayout title={`#${tag} | Personal Library`}>
+  <header class="page-intro"><p class="eyebrow">Tag</p><h1>#{tag}</h1></header>
+  <div class="card-grid">
+    {
+      matchingArticles.map((article) => (
+        <ContentCard
+          title={article.data.title}
+          description={article.data.description}
+          href={`/articles/${article.id}`}
+          tags={article.data.tags}
+          meta="Article"
+        />
+      ))
+    }
+    {
+      matchingResources.map((resource) => (
+        <ContentCard
+          title={resource.data.title}
+          description={resource.data.description}
+          href={`/resources/${resource.id}`}
+          tags={resource.data.tags}
+          meta="Resource"
+        />
+      ))
+    }
+  </div>
+</BaseLayout>

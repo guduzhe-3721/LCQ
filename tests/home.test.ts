@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 const projectRoot = resolve(import.meta.dirname, "..");
 
 describe("the built home page", () => {
-  it("has the Chinese title and exactly one named heading", () => {
+  it("has the site title and exactly one named heading", () => {
     execSync("npm run build", {
       cwd: projectRoot,
       stdio: "pipe",
@@ -17,7 +17,7 @@ describe("the built home page", () => {
       "utf8",
     );
 
-    expect(document).toContain("<title>鎴戠殑绌洪棿</title>");
-    expect(document.match(/<h1[^>]*>鎴戠殑绌洪棿<\/h1>/g)).toHaveLength(1);
+    expect(document).toContain("<title>Personal Library</title>");
+    expect(document.match(/<h1[^>]*>Personal Library<\/h1>/g)).toHaveLength(1);
   });
 });

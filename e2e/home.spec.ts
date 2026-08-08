@@ -6,6 +6,6 @@ test("shows the home heading at desktop and mobile widths", async ({
   await page.goto("/");
 
   await expect(
-    page.getByRole("heading", { level: 1, name: "鎴戠殑绌洪棿" }),
+    page.getByRole("heading", { level: 1, name: "Personal Library" }),
   ).toBeVisible();
 });

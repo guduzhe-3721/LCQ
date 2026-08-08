@@ -1,0 +1,35 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import ContentCard from "../../components/ContentCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const resources: CollectionEntry<"resources">[] = await getCollection(
+  "resources",
+  ({ data }: CollectionEntry<"resources">) => !data.draft,
+);
+
+resources.sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+---
+
+<BaseLayout title="Resources | Personal Library">
+  <header class="page-intro">
+    <p class="eyebrow">Downloads</p><h1>Resources</h1><p>
+      Useful files released directly through GitHub Releases.
+    </p>
+  </header>
+  <div class="card-grid">
+    {
+      resources.map((resource) => (
+        <ContentCard
+          title={resource.data.title}
+          description={resource.data.description}
+          href={`/resources/${resource.id}`}
+          tags={resource.data.tags}
+          meta={`${resource.data.category} · v${resource.data.version}`}
+        />
+      ))
+    }
+  </div>
+</BaseLayout>

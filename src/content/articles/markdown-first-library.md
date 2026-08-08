@@ -6,4 +6,10 @@ tags: ["markdown", "astro", "static-site"]
 cover: "https://images.unsplash.com/photo-1455390582262-044cdead277a"
 ---
 
+## Why Markdown works
+
 Markdown keeps writing portable, reviewable, and close to the site that presents it.
+
+```ts
+const publishing = "files plus a static build";
+```

@@ -1,0 +1,51 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import TagList from "../../components/TagList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const articles: CollectionEntry<"articles">[] = await getCollection(
+    "articles",
+    ({ data }: CollectionEntry<"articles">) => !data.draft,
+  );
+  return articles.map((article: CollectionEntry<"articles">) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article }: { article: CollectionEntry<"articles"> } = Astro.props;
+const { Content, headings } = await render(article);
+---
+
+<BaseLayout title={`${article.data.title} | Personal Library`}>
+  <article class="detail-layout">
+    <header class="page-intro">
+      <p class="eyebrow">
+        {
+          article.data.publishedAt.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })
+        }
+      </p><h1>{article.data.title}</h1><p>{article.data.description}</p><TagList
+        tags={article.data.tags}
+      />
+    </header>
+    <div class="article-body"><Content /></div>
+    <aside class="toc" aria-label="Table of contents">
+      <h2>On this page</h2><ul>
+        {
+          (headings as { depth: number; slug: string; text: string }[]).map(
+            (heading) => (
+              <li class={`toc-depth-${heading.depth}`}>
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
+            ),
+          )
+        }
+      </ul>
+    </aside>
+  </article>
+</BaseLayout>
