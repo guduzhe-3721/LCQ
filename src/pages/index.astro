@@ -1,9 +1,53 @@
 ---
+import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const title = "鎴戠殑绌洪棿";
+const [articles, resources]: [
+  CollectionEntry<"articles">[],
+  CollectionEntry<"resources">[],
+] = await Promise.all([
+  getCollection(
+    "articles",
+    ({ data }: CollectionEntry<"articles">) => !data.draft,
+  ),
+  getCollection(
+    "resources",
+    ({ data }: CollectionEntry<"resources">) => !data.draft,
+  ),
+]);
 ---
 
 <BaseLayout title={title}>
   <h1>{title}</h1>
+  <section aria-labelledby="articles-heading">
+    <h2 id="articles-heading">Articles</h2>
+    <ul>
+      {
+        articles.map((article) => (
+          <li>
+            <article>
+              <h3>{article.data.title}</h3>
+              <p>{article.data.description}</p>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+  <section aria-labelledby="resources-heading">
+    <h2 id="resources-heading">Resources</h2>
+    <ul>
+      {
+        resources.map((resource) => (
+          <li>
+            <article>
+              <h3>{resource.data.title}</h3>
+              <p>{resource.data.description}</p>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </BaseLayout>

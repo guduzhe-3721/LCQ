@@ -1,19 +1,11 @@
 import { execSync } from "node:child_process";
-import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { articleSchema, resourceSchema } from "../src/content.config";
 
 const validHash = "a".repeat(64);
 const projectRoot = resolve(import.meta.dirname, "..");
-const collectionCheckPage = resolve(
-  projectRoot,
-  "src/pages/content-collections-test.json.ts",
-);
-const collectionCheckOutput = resolve(
-  projectRoot,
-  "dist/content-collections-test.json",
-);
 
 const resource = {
   title: "Astro Starter Template",
@@ -66,33 +58,17 @@ describe("content collection schemas", () => {
 });
 
 describe("Markdown content collections", () => {
-  beforeAll(() => {
-    writeFileSync(
-      collectionCheckPage,
-      `import { getCollection } from "astro:content";\n\nexport async function GET() {\n  const [articles, resources] = await Promise.all([\n    getCollection("articles"),\n    getCollection("resources"),\n  ]);\n\n  return new Response(JSON.stringify({ articles, resources }));\n}\n`,
-    );
-  });
-
-  afterAll(() => {
-    if (existsSync(collectionCheckPage)) rmSync(collectionCheckPage);
-  });
-
-  it("loads two articles and two resources with one draft in each collection", () => {
+  it("renders only published articles and resources", () => {
     execSync("npm run build", { cwd: projectRoot, stdio: "pipe" });
 
-    const collections = JSON.parse(readFileSync(collectionCheckOutput, "utf8"));
+    const document = readFileSync(
+      resolve(projectRoot, "dist", "index.html"),
+      "utf8",
+    );
 
-    expect(collections.articles).toHaveLength(2);
-    expect(collections.resources).toHaveLength(2);
-    expect(
-      collections.articles.filter(
-        (entry: { data: { draft: boolean } }) => entry.data.draft,
-      ),
-    ).toHaveLength(1);
-    expect(
-      collections.resources.filter(
-        (entry: { data: { draft: boolean } }) => entry.data.draft,
-      ),
-    ).toHaveLength(1);
+    expect(document).toContain("A Markdown-first personal library");
+    expect(document).toContain("Astro library starter");
+    expect(document).not.toContain("Draft: A calm publishing workflow");
+    expect(document).not.toContain("Draft: Reading checklist");
   });
 });
