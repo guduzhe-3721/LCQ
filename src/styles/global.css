@@ -1,6 +1,6 @@
 :root {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  color: #172554;
+  color: #000;
   background: #f8fafc;
 }
 * {
@@ -12,11 +12,11 @@ body {
   background: #f8fafc;
 }
 a {
-  color: #4338ca;
+  color: #000;
   text-underline-offset: 0.18em;
 }
 a:hover {
-  color: #312e81;
+  color: #000;
 }
 a:focus-visible {
   outline: 3px solid #f59e0b;
@@ -34,14 +34,9 @@ a:focus-visible {
 .header-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1rem;
   min-height: 4.5rem;
-}
-.brand {
-  color: #1e1b4b;
-  font-weight: 800;
-  text-decoration: none;
 }
 .nav-links,
 .tag-list {
@@ -51,6 +46,9 @@ a:focus-visible {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+.nav-links {
+  justify-content: center;
 }
 .nav-links a {
   font-weight: 700;
@@ -63,7 +61,7 @@ main {
   border-top: 1px solid #e2e8f0;
   padding-block: 1.25rem;
   background: #fff;
-  color: #475569;
+  color: #000;
   font-size: 0.9rem;
 }
 .site-footer .site-shell {
@@ -71,7 +69,6 @@ main {
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
 }
-.hero,
 .page-intro {
   max-width: 48rem;
   margin-bottom: 2.5rem;
@@ -79,7 +76,7 @@ main {
 h1,
 h2,
 h3 {
-  color: #172554;
+  color: #000;
   line-height: 1.15;
 }
 h1 {
@@ -97,7 +94,7 @@ p {
   line-height: 1.65;
 }
 .eyebrow {
-  color: #4f46e5;
+  color: #000;
   font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -138,7 +135,7 @@ section + section {
   padding: 0.2rem 0.5rem;
   border-radius: 999px;
   background: #eef2ff;
-  color: #3730a3;
+  color: #000;
   font-size: 0.85rem;
   text-decoration: none;
 }
@@ -152,8 +149,8 @@ section + section {
   overflow-x: auto;
   padding: 1rem;
   border-radius: 0.7rem;
-  background: #172554;
-  color: #f8fafc;
+  background: #fff;
+  color: #000;
 }
 .toc {
   margin: 2rem 0;
@@ -176,14 +173,14 @@ section + section {
   display: inline-block;
   padding: 0.7rem 1rem;
   border-radius: 0.6rem;
-  background: #4f46e5;
-  color: #fff;
+  background: #e2e8f0;
+  color: #000;
   font-weight: 800;
   text-decoration: none;
 }
 .button:hover {
-  background: #3730a3;
-  color: #fff;
+  background: #cbd5e1;
+  color: #000;
 }
 .metadata {
   display: grid;
@@ -197,7 +194,7 @@ section + section {
 }
 .metadata dt {
   font-weight: 800;
-  color: #475569;
+  color: #000;
 }
 .metadata dd {
   margin: 0.25rem 0 0;
@@ -223,7 +220,7 @@ section + section {
 }
 .search-status {
   min-height: 1.65em;
-  color: #475569;
+  color: #000;
 }
 .search-results {
   display: grid;
@@ -254,8 +251,7 @@ section + section {
 }
 @media (max-width: 25rem) {
   .header-content {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
     padding-block: 0.8rem;
   }
   .nav-links {
